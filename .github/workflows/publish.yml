@@ -1,0 +1,95 @@
+name: Publish
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  run-tests:
+    name: Run Tests
+    uses: oktupol/base-emoji/.github/workflows/test.yml@main
+      
+  check-versions:
+    name: Check Versions
+    needs: run-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '17'
+      
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile files
+        run: npm run build
+
+      - name: Check versions
+        run: |
+          package_json_version=$(node -pe 'JSON.parse(process.argv[1]).version' "$(cat ./package.json)")
+          tag_version=${GITHUB_REF_NAME:1}
+          app_version=$(node ./dist/cli.js -V)
+          [[ ( "$package_json_version" = "$app_version" ) && ( "$app_version" = "$tag_version" )]]
+  
+  publish-npmjs:
+    name: Publish to npmjs.com
+    needs: check-versions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '17'
+          registry-url: 'https://registry.npmjs.org'
+      
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-github:
+    name: Publish to Github Packages
+    needs: check-versions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '17'
+          registry-url: 'https://npm.pkg.github.com'
+      
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
+
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

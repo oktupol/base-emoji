@@ -1,0 +1,45 @@
+{
+  "name": "@oktupol/base-emoji",
+  "version": "1.0.0",
+  "description": "Like base32 and base64, but with emoji.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "debug": "tsc --sourcemap -p .",
+    "watch": "tsc --watch -p .",
+    "test": "jest"
+  },
+  "bin": {
+    "base-emoji": "./dist/cli.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oktupol/base-emoji.git"
+  },
+  "keywords": [
+    "encoding",
+    "base64",
+    "base32",
+    "emoji"
+  ],
+  "author": "Sebastian Wieland",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oktupol/base-emoji/issues"
+  },
+  "homepage": "https://github.com/oktupol/base-emoji#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "@babel/preset-typescript": "^7.16.5",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^17.0.2",
+    "babel-jest": "^27.4.5",
+    "jest": "^27.4.5",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  },
+  "dependencies": {
+    "commander": "^8.3.0"
+  }
+}

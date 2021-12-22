@@ -1,0 +1,10 @@
+/src
+
+/jest.config.js
+/tsconfig.json
+/emoji-map.json
+/*.tgz
+
+*.spec.js
+*.spec.d.ts
+*.js.map
