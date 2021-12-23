@@ -7,7 +7,6 @@
 /examples
 /*.tgz
 /.github
-/README.md
 
 *.spec.js
 *.spec.d.ts
