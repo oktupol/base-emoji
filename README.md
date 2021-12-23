@@ -10,7 +10,7 @@ Install base-emoji as a cli executable using npm:
 npm install -g @oktupol/base-emoji
 ```
 
-or as a library inside your Javascript or Typescript library:
+or as a library inside your Javascript or Typescript project:
 
 ```bash
 npm install @oktupol/base-emoji
