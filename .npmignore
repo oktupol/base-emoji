@@ -4,6 +4,7 @@
 /tsconfig.json
 /emoji-map.json
 /*.tgz
+/.github
 
 *.spec.js
 *.spec.d.ts
