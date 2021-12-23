@@ -4,8 +4,10 @@
 /jest.config.js
 /tsconfig.json
 /emoji-map.json
+/examples
 /*.tgz
 /.github
+/README.md
 
 *.spec.js
 *.spec.d.ts

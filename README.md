@@ -20,13 +20,15 @@ npm install @oktupol/base-emoji
 
 ### CLI
 
-- Encode or decode data from stdin:
+- Encode data from stdin:
 
     ```
     echo 'Hello World' | base-emoji
 
     ==> 🐅🚓📿🙉🤍🐝🕎🚥🌿🤛🕓
     ```
+    
+- Decode with the flag `-d`
 
     ```
     echo '🐎🍻🪖🦭🍃🍻🪶🦈🍆🌗👩🍶🕗' | base-emoji -d
@@ -36,25 +38,29 @@ npm install @oktupol/base-emoji
 
 - Encode or decode data from a file
 
+    ![Cat](./examples/cat.jpg)
+    <small>[cat.jpg](./examples/cat.jpg) - 2009, [Michael Wilson](https://www.flickr.com/photos/michaelpwilson/5430883069/) CC BY-NC-ND 2.0</small>
+
     ```
-    base-emoji kitty.jpg
+    base-emoji cat.jpg
 
     ==>
-    🔣💌⛰😤🌴🍑😀😀⚒🔹🤢🐰😀😀🐈😀😀👑❓🤗😀😀🛎🏓😀😀🤒💳🔚🐷👣🚳
-    😊🆚👶🗞😀😀😃📣🤧🦇🏏🔪🎼🌬😾🕚😃🍎🎲🕊🛴⛓🐇🔲🥁🌔🤺🎁😀😊😀📔
-    🤢😸💅🏁🚕🎫🌓🐙🔈❌👈🐋🚘🌳...
+    ➿🌾📛🤹🤜😡🗻🦕😀😆📖🤹💅😀😀🙂😀🤪🍙🤹😘😀😀😃😀😀🤣🍶😀😀😀😀
+    😀😀😀🤾🪣🙂🍃😻🧇📺🕎🧾🧇🥻😇🎷👨😁🥄🚇🐪😟🤹😀😀😀🤑🦝😅🍑😀📿
+    🤘💋👗🤹😀🤨...
     ```
+    <small>[cat.jpg.emoji](./examples/cat.jpg.emoji) - full output of above command</small>
 
 - Direct the output of any command into a file
     
     ```
-    base-emoji -d doggo.emj > doggo.jpg
+    base-emoji -d dog.jpg.emoji > dog.jpg
     ```
     
 - When encoding, optionally use the `-a` flag to armor the output
 
     ```
-    gpg --export mail@example.com | base-emoji -a 
+    base-emoji -a some-document.pdf
     
     ==> 
     🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔢💝🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵🔵
