@@ -1,4 +1,4 @@
-# 😄 Base Emoji 👌
+# 👪🗾🤵🐯 Base Emoji 🦧🥅🔝🚏
 
 There is base32, there is base64, now there is base-emoji!
 
