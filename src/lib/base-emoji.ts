@@ -15,14 +15,14 @@ export class BaseEmoji {
   /**
    * Encode data into base-emoji
    * 
-   * @param {string | ArrayBufferLike} buffer Data to be encoded, either as string or ArrayBufferLike (e.g. Uint8Array, ArrayBuffer ...)
+   * @param {string | Uint8Array | ArrayBuffer} buffer Data to be encoded, either as string, Uint8Array or ArrayBuffer
    * @param {EncodeOptions} options Optional object with options for encoding. These are:
    *                                - armor: boolean; if true, the result will be armored with an easy-to-recognise header and a footer
    *                                - armorDescriptor: string; if armored, the descriptor will be displayed inside the armor header and footer
    *                                - wrap: number; a new line will be inserted every n characters, if specified
    * @returns {string} The base-emoji encoded representation of the data
    */
-  public static encode(buffer: string | ArrayBufferLike, options: EncodeOptions = {}): string {
+  public static encode(buffer: string | Uint8Array | ArrayBuffer, options: EncodeOptions = {}): string {
     const bytes = this.toUint8Array(buffer);
     
     if (!bytes.length) {

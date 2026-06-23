@@ -15,15 +15,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
-          node-version: '17'
+          node-version: '26'
       
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v6
         with:
           path: ./node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
@@ -47,16 +47,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
-          node-version: '17'
+          node-version: '26'
           registry-url: 'https://registry.npmjs.org'
       
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v6
         with:
           path: ./node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
@@ -73,16 +73,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v7
       
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
-          node-version: '17'
+          node-version: '26'
           registry-url: 'https://npm.pkg.github.com'
       
       - name: Cache dependencies
-        uses: actions/cache@v2
+        uses: actions/cache@v6
         with:
           path: ./node_modules
           key: ${{ runner.os }}-node-modules-${{ hashFiles('./package-lock.json') }}
