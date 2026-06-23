@@ -36,9 +36,9 @@ Because 10 does not divide 8 evenly, the last emoji may carry leftover bits. A *
 
 - String input is treated as bytes via `charCodeAt` (`toUint8Array`), so only the low 8 bits of each char survive. This is a byte encoder, not a UTF-8 text encoder.
 - All character iteration uses spread (`[...str]`) or unicode-flagged regex (`/u`, `/gmu`) because emoji are multi-code-unit; never index emoji strings with `[i]` or `.length` expecting one-per-char.
-- `program.version(...)` in `src/cli.ts` and `package.json`'s `version` are maintained by hand and **must match**. The publish workflow's `check-versions` job fails the release unless `package.json` version, the git tag (minus its leading char), and `node dist/cli.js -V` are all equal.
+- The version is single-sourced from the git release tag. `package.json` carries a `0.0.0-dev` placeholder during development, and `src/cli.ts` reads its version at runtime from `package.json` (no hardcoded version). On a published release, `publish.yml` stamps `package.json` from the tag (`npm pkg set version="${GITHUB_REF_NAME#v}"`) before building, so just tag `vX.Y.Z` — don't hand-edit versions.
 - `src/lib/emojis_unicode.js` is an untracked scratch file, not part of the build.
 
 ## CI
 
-`.github/workflows/test.yml` builds and runs Jest on Linux and Windows (Node 17) for every push to any branch and PRs to `main`. `.github/workflows/publish.yml` fires on a published GitHub release: it re-runs tests, enforces the version check above, then publishes to both npmjs.com and GitHub Packages. Commits whose message contains `[skip ci]` (used for README/version bumps) skip the workflows.
+`.github/workflows/test.yml` builds and runs Jest on Linux and Windows (Node 17) for every push to any branch and PRs to `main`. `.github/workflows/publish.yml` fires on a published GitHub release: it re-runs tests, stamps `package.json`'s version from the release tag, then publishes to both npmjs.com and GitHub Packages. Commits whose message contains `[skip ci]` (used for README/version bumps) skip the workflows.

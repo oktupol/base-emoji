@@ -2,11 +2,16 @@
 
 import { Command } from 'commander';
 import { accessSync, constants, readFileSync, statSync } from 'fs';
+import { join } from 'path';
 import { BaseEmoji } from './lib/base-emoji';
 import { emojiDecodeMap } from './lib/emojis';
 
+const { version } = JSON.parse(
+  readFileSync(join(__dirname, '..', 'package.json'), 'utf8')
+);
+
 const program = new Command();
-program.version('1.1.1');
+program.version(version);
 
 program
   .description('Base-Emoji encode or decode FILE, or standard input, to standard output.\n\nWith no FILE, or when FILE is -, read standard input.')
