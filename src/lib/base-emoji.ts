@@ -1,4 +1,3 @@
-import { resourceLimits } from 'worker_threads';
 import { emojiDecodeMap, emojis, specialEmojis } from './emojis';
 import { DecodeOptions, EncodeOptions } from './interfaces';
 
@@ -67,20 +66,21 @@ export class BaseEmoji {
     let encodedChars = this.dearmor(encoded);
     
     let padding = 0;
-    if (specialEmojis.padding.includes(encodedChars[encodedChars.length - 1])) {
-      const paddingChar = encodedChars.pop();
-      padding = specialEmojis.padding.findIndex(c => c === paddingChar);
+    const padIndex = specialEmojis.padding.indexOf(encodedChars[encodedChars.length - 1]);
+    if (padIndex >= 0) {
+      encodedChars.pop();
+      padding = padIndex;
     }
 
     if (options.ignoreGarbage) {
       encodedChars = encodedChars.filter(c => typeof emojiDecodeMap[c] === 'number');
     }
     const tuples = encodedChars.map(c => {
-      if (typeof emojiDecodeMap[c] === 'number') {
-        return emojiDecodeMap[c]
-      } else {
+      const value = emojiDecodeMap[c];
+      if (typeof value !== 'number') {
         throw new Error('Invalid input, unexpected char ' + c.charCodeAt(0) + ': ' + c);
       }
+      return value;
     });
     
     const { transposed } = this.transpose(tuples, 10, 8);
@@ -149,7 +149,7 @@ export class BaseEmoji {
 
       while (bitsRemaining) {
         const bitsTaken = Math.min(n - bitsFilled, bitsRemaining);
-        const mask = (2 ** bitsTaken - 1) << (bitsRemaining - bitsTaken);
+        const mask = ((1 << bitsTaken) - 1) << (bitsRemaining - bitsTaken);
         const bits = (mTuple & mask) >> (bitsRemaining - bitsTaken);
         const shift = n - bitsFilled - bitsTaken;
         nTuple |= bits << shift;
